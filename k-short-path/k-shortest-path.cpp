@@ -1,0 +1,217 @@
+#include <stdio.h>
+#include <cstring>
+#include <queue>
+#include <string>
+
+using namespace std;
+
+const int MAXN = 100;
+const int MAXM = 10000;
+const int MAXK = 11;
+const int INF = 1000000000;
+
+
+typedef struct Edg{
+	int v, len, next;
+};
+
+typedef	struct Node{
+	int u, kk, dis;
+	Node(int a, int b, int c){
+		u = a;
+		kk = b;
+		dis = c;
+	}
+	bool operator < ( const Node &b) const{
+		if( dis != b.dis)  return dis > b.dis;
+		return true;
+	}
+}Node_State;
+
+typedef struct Kshortpath{
+	
+	int graph[MAXN][MAXN];
+	int dis[MAXN][MAXK];
+	int pre[MAXN][MAXK][2];
+	int cnt_inq[MAXN];
+	int n_node;
+	int m_edg;
+	int use_edg;
+	int s, t, short_k;
+	bool inq[MAXN];
+	int head[MAXN];
+	Edg edg[MAXM];
+	
+
+	priority_queue< Node_State, vector< Node_State > > pq[MAXN];
+	queue<int> que;
+
+	void add_edg(int a, int b, int c){
+		edg[use_edg].v = b; edg[use_edg].len = c; edg[use_edg].next = head[a]; head[a] = use_edg++;
+	}
+	bool readin();
+	bool spfa(int s);
+	int next_path(int u, int k);
+	void init();
+	bool solve();
+	void print_value();
+	void print_path_dfs(int u,int k);
+	void print_path(int u, int k);
+	void print_all_short(int u);
+	void print_graph();
+};
+bool Kshortpath::readin(){
+		memset(head, -1, sizeof(head));
+		use_edg = 0;
+		if( scanf("%d%d", &n_node, &m_edg) == EOF)  return false;
+		for(int i = 0, a, b, c; i < m_edg; ++i){
+			scanf("%d%d%d", &a, &b, &c);
+			add_edg(a, b, c);
+			graph[a][b] = c;
+		}
+		scanf("%d%d%d", &s, &t, &short_k);
+		return true;
+}
+	
+bool Kshortpath::spfa(int s){
+		dis[s][0] = 0;
+		memset(inq, 0, sizeof(inq));
+		memset(cnt_inq, 0, sizeof(cnt_inq));
+		while(!que.empty())  que.pop();
+		que.push(s);
+		while(!que.empty()){
+			int u = que.front(); que.pop();
+			if(cnt_inq[u]++ > n_node)  return false;
+			inq[u] = false;
+			for(int i = head[u]; i != -1; i = edg[i].next){
+				int v = edg[i].v;
+				int tmp = dis[u][0] + edg[i].len;
+				if(tmp < dis[v][0]){
+					pre[v][0][0] = u;
+					pre[v][0][1] = 0;
+					dis[v][0] = tmp;
+					if(!inq[v])  que.push(v);
+					inq[v] = 1;
+				}
+			}
+		}
+		return true;
+}
+
+int Kshortpath::next_path(int u, int k){
+		if(k == 0)  return dis[u][0];
+		if(k >= short_k)  return INF;
+		if(u == s)  return k ? INF : 0;
+		if(dis[u][k] != INF)  return dis[u][k];
+		while(!pq[u].empty()){
+
+			Node tmp = pq[u].top();  pq[u].pop();
+			if(tmp.dis >= INF)  return dis[u][k] = INF;
+			dis[u][k] = tmp.dis;
+			pq[u].push(Node_State(tmp.u, tmp.kk + 1, next_path(tmp.u, tmp.kk + 1) + graph[tmp.u][u]));
+			if(dis[u][k] >=  dis[u][k - 1])  { // value unique dis[u][k] >= dis[u][k]  dis[i][k] maybe equal dis[i][k - 1];
+				pre[u][k][0] = tmp.u;
+				pre[u][k][1] = tmp.kk;
+				break;  
+			}else{
+			}
+		}
+
+		return dis[u][k]; 
+}
+
+void Kshortpath::init(){
+
+		for(int i = 1; i <= n_node; ++i){
+			for(int j = 0; j < short_k; ++j)
+			dis[i][j] = INF;
+		}
+		memset(pre, -1, sizeof(pre));
+		for(int i = 0; i < short_k; ++i)  {
+			pre[s][i][0] = s;
+		}
+		for(int i = 1; i <= n_node; ++i){
+			while(!pq[i].empty())  pq[i].pop();
+		}
+}
+
+bool Kshortpath::solve(){
+		if( !spfa(s))  return false;
+		for(int i = 1; i <= n_node; ++i){
+			for(int j = head[i]; j != -1; j = edg[j].next){
+				int v = edg[j].v;
+				if(pre[v][0][0] != i){
+					pq[v].push(Node_State(i, 0, dis[i][0] + edg[j].len));
+				}
+			}
+		}
+		for(int k = 1; k < short_k; ++k){
+			for(int i = 1; i <= n_node; ++i) {
+				next_path(i, k);
+			}
+		}
+		return true;
+}
+
+void Kshortpath::print_value(){
+		printf("shortest path---------------");
+		printf("%d %d %d\n", s, t, short_k);
+		for(int i = 1; i <= n_node; ++i){
+			printf("%d : ", i);
+			for(int j = 0; j < short_k; ++j){
+				printf("%d  ", dis[i][j]);
+			}
+			puts("");
+		}
+		puts("---------------------------");
+}
+void Kshortpath::print_path_dfs(int u, int k){
+		if(pre[u][k][0] == -1){
+			puts("not exist %d shortest path\n");
+			return;
+		}
+		if(u == s){
+			printf("%d -> ", s);
+			return;
+		}
+		int u_pre = pre[u][k][0];
+		int u_pre_k = pre[u][k][1];
+		print_path_dfs(u_pre, u_pre_k);
+		printf("%d -> ", u);
+}
+
+void Kshortpath::print_path(int u, int k){
+		printf("[%d, %d, %d]: ", u, k, dis[u][k]);
+		print_path_dfs(u, k);
+		puts("");
+}
+void Kshortpath::print_all_short(int u){
+		printf("%d  shortest path print-------------\n", short_k);
+		for(int i = 0; i < short_k; ++i){
+			print_path(u, i);
+		}
+		puts("-----------------------------------\n\n");
+}
+void Kshortpath::print_graph(){
+		printf("graph information------------------\n");
+		for(int i = 1; i <= n_node; ++i){
+			for(int j = head[i]; j != -1; j = edg[j].next){
+				printf("%d -> %d   %d\n", i, edg[j].v, edg[j].len);
+			}
+		}
+		puts("-----------------------------------\n\n");
+}
+
+int main(){
+
+	Kshortpath test;
+	while(test.readin()){
+		test.print_graph();
+		test.init();
+		if( !test.solve()) {
+			puts("图中有负环");
+		}
+		else test.print_all_short(test.t);
+	}
+	return 0;
+}

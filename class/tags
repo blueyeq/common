@@ -1,0 +1,30 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.6	//
+Base	testBase.h	/^			Base(){}$/;"	f	class:testBase::Base
+Base	testBase.h	/^	class Base{$/;"	c	namespace:testBase
+BaseGetType	Circle.cpp	/^	void Circle::BaseGetType(){$/;"	f	class:testBase::Circle
+CIRCLE_H	Circle.h	2;"	d
+Circle	Circle.cpp	/^	Circle::Circle(){$/;"	f	class:testBase::Circle
+Circle	Circle.h	/^	class Circle  {$/;"	c	namespace:testBase
+MATRIX_H	Matrix.h	2;"	d
+Matrix	Matrix.h	/^			Matrix(){$/;"	f	class:testBase::Matrix
+Matrix	Matrix.h	/^	class Matrix : public Base{$/;"	c	namespace:testBase
+TEST_BASH_H	testBase.h	2;"	d
+base_member	Circle.h	/^			Base *base_member;$/;"	m	class:testBase::Circle
+getType	Matrix.cpp	/^	void Matrix::getType(){$/;"	f	class:testBase::Matrix
+main	main.cpp	/^int main(){$/;"	f
+protect	testBase.h	/^			uint32_t protect;$/;"	m	class:testBase::Base
+testBase	Circle.cpp	/^namespace testBase{$/;"	n	file:
+testBase	Circle.h	/^namespace testBase{$/;"	n
+testBase	Matrix.cpp	/^namespace testBase{$/;"	n	file:
+testBase	Matrix.h	/^namespace testBase{$/;"	n
+testBase	testBase.h	/^namespace testBase{$/;"	n
+type	testBase.h	/^			uint32_t type;$/;"	m	class:testBase::Base
+uint32_t	testBase.h	/^	typedef unsigned int uint32_t;$/;"	t	namespace:testBase
+~Base	testBase.h	/^		    virtual	~Base(){}$/;"	f	class:testBase::Base
+~Circle	Circle.cpp	/^	Circle::~Circle(){$/;"	f	class:testBase::Circle
+~Matrix	Matrix.h	/^			~Matrix(){$/;"	f	class:testBase::Matrix
