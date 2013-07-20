@@ -1,0 +1,4 @@
+step 1 git init
+step 2 git add remote origin gits://github.com/blueyeq/common.git
+step 3 ssh-keygen
+step 4 git pull merger  push
