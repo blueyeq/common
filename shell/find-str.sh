@@ -1,5 +1,7 @@
 #!/bin/bash
 
+find_str='default str'
+
 function str_file()
 {
 
@@ -9,7 +11,7 @@ function str_file()
 			cd $file 
 			str_file
 		else 
-			cat $file | grep rankTop | while read line ; do echo $file $line; done
+			cat $file | grep ${find_str}| while read line ; do echo $file $line; done
 		fi
 	done
 cd ../
