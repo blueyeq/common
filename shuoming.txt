@@ -1,9 +1,3 @@
-#git 步骤
-step 1 git init
-step 2 git add remote origin gits://github.com/blueyeq/common.git
-step 3 ssh-keygen
-step 4 git pull merge  push
-
 -e 当前失败则退出
 -n 读入但不执行
 -u 未设置的变量视为错误
