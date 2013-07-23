@@ -26,3 +26,19 @@ scp localfile remotehost:floder
 shell 保留字  $$当前进程pid $#当前程序参数数目 $? 上一句执行情况(为0则正常执行) $0 当前程序名字 $! last program的pid $@所有参数
 c++不能在.h文件声明全局变量，要达到这个目的要在他对应的cpp文件中声明该全局的变量并且在.h文件中通过extern关键字声明该变量,那么在include了该文件的文件中可以不声明就用它,如果不在.h文件中通过extern声明那么他们就不能在其他c++文件中用它
 
+java坑 手动去掉 '\r' '\n' 出错  replace没问题 
+example：
+case 1:
+String html="";
+len_content = content,length();
+for(int i = 0; i < len_content; ++i)	{
+	char ch = content.charAt(i);
+	if(ch == '\r' || ch == '\n')  continue;
+	html += ch;
+}
+
+case 2:
+String html = content,replace("\r", "");
+	   html = content.replace("\n". "");	
+
+java坑 编码不一致时indexOf会出问题
