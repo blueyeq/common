@@ -1,0 +1,31 @@
+partition 和group同时设定才能生效
+conf.setPartitionerClass(Util.FirstFieldHashPartitionerTab.class);
+conf.setOutputValueGroupingComparator(Util.FirstFieldGroupComparatorTab.class);
+
+public static class FirstFieldHashPartitionerTab implements Partitioner<Text, Text> {
+@SuppressWarnings({ "rawtypes" })
+HashPartitioner hp = null;
+@SuppressWarnings({ "rawtypes" })
+@Override
+public void configure(JobConf job) {
+this.hp = new HashPartitioner();
+}
+@SuppressWarnings({ "unchecked" })
+@Override
+public int getPartition(Text key, Text value, int numPartitions) {
+return this.hp.getPartition(key.toString().split("\t")[0],value, numPartitions);
+}
+}
+
+c static class FirstFieldGroupComparatorTab extends WritableComparator {
+protected FirstFieldGroupComparatorTab() {
+super(Text.class, true);
+}
+@SuppressWarnings("rawtypes")
+@Override
+public int compare(WritableComparable w1, WritableComparable w2) {
+Text k1 = (Text) w1;
+Text k2 = (Text) w2;
+return k1.toString().split("\t")[0].compareTo(k2.toString().split("\t")[0]);
+}
+}
