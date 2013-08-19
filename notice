@@ -43,3 +43,5 @@ String html = content,replace("\r", "");
 
 java坑 编码不一致时indexOf会出问题
 svn merge src@yourBranchVersion src@srcVersionTomerge .   相当于你的分支修改前的版本和当前trunk目录的版本先做diff 然后合并到你的分支
+
+svn 语言英文设置 LANGUAGE=en_US.en
