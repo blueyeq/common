@@ -1,0 +1,157 @@
+set nocompatible
+set noeb
+set nobackup
+set noswapfile
+set confirm
+set autoindent
+set cindent
+ 
+set number
+set history=222
+set syntax=on
+set syn=cpp
+set softtabstop=4
+set sw=4
+set tabstop=4
+set ignorecase
+set encoding=utf-8
+set fileencodings=ucs-bom,utf-8,euc-cn,cp936
+set langmenu=zh_CN.UTF-8
+ 
+set helplang=cn
+set iskeyword+=_,$,@,%,#,-
+set selection=exclusive
+set selectmode=mouse,key
+set showmatch
+set smartindent
+
+filetype plugin on
+
+let g:BASH_AuthorName   = 'qiurunli'
+let g:BASH_Company      = 'qihoo'
+
+"复制到剪切板
+set clipboard+=unnamed
+
+
+""""""""""""""""""""""""""""""
+" Tag list (ctags)
+" """"""""""""""""""""""""""""""
+set tags=../../tags
+
+if filereadable("tags")
+	set tags=tags
+elseif filereadable("../tags")
+	set tags=../tags
+elseif filereadable("../../tags")
+	set tags=../../tags
+elseif filereadable("../../../tags")
+	set tags=../../../tags
+elseif filereadable("../../../../tags")
+	set tags=../../../../tags
+endif
+
+
+let Tlist_Ctags_Cmd = '/usr/local/bin/ctags'
+let Tlist_Show_One_File = 1
+"不同时显示多个文件的tag，只显示当前文件的
+let Tlist_Exit_OnlyWindow = 1
+"如果taglist窗口是最后一个窗口，则退出vim
+let Tlist_Use_Left_Window = 1         
+
+
+""""""""""""""""""""""""""""""""""
+"设置cscope
+""""""""""""""""""""""""""""""""
+
+if has("cscope")
+	set csprg=/usr/bin/cscope
+	set csto=0
+	set cst
+	set nocsverb
+	" add any database in current directory
+	if filereadable("cscope.out")
+		cs add cscope.out
+	elseif filereadable("../cscope.out")
+		cs add ../cscope.out
+	elseif filereadable("../../cscope.out")
+		cs add ../../cscope.out
+	elseif filereadable("../../../cscope.out")
+		cs add ../../../cscope.out
+	elseif filereadable("../../../../cscope.out")
+		cs add ../../../../cscope.out
+	" else add database pointed to by environment
+	elseif $CSCOPE_DB != ""
+		cs add $CSCOPE_DB
+	endif
+
+	set cscopequickfix=s-,c-,d-,i-,t-,e- 
+	set csverb
+endif
+
+nnoremap <silent> <F8> :TlistToggle<CR>
+nnoremap <silent> <F7> :make<CR>
+nnoremap ; :
+nnoremap vdiff :vert diffsplit 
+nmap<C-\>s :cs find s <C-R>=expand("<cword>")<CR><CR>
+nmap<C-\>d :cs find d <C-R>=expand("<cword>")<CR><CR>
+nmap<C-\>g :cs find g <C-R>=expand("<cword>")<CR><CR>
+nmap<C-\>c :cs find c <C-R>=expand("<cword>")<CR><CR>
+nmap<C-\>f :cs find f <C-R>=expand("<cword>")<CR><CR>
+nmap<C-\>i :cs find i <C-R>=expand("<cword>")<CR><CR>
+set cscopequickfix=s-,c-,d-,i-,t-,e- 
+
+
+func Run()
+"exec "!./%<"
+ exec "!gdb ./%<"
+endfunc
+map <F9> :call Run()<CR>
+
+" 括号补齐
+
+":inoremap ( ()<ESC>i
+:inoremap ) <c-r>=ClosePair(')')<CR>
+":inoremap { {<CR>}<ESC>O
+:inoremap ] <c-r>=ClosePair(']')<CR>
+":inoremap [ []<ESC>i
+:inoremap } <c-r>=ClosePair('}')<CR>
+":inoremap " ""<ESC>i
+":inoremap ' ''<ESC>i
+
+function! ClosePair(char)
+    if getline('.')[col('.') - 1] == a:char
+        return "\<Right>"
+	else
+		return a:char
+    endif
+endfunction
+
+
+
+"比较文件  
+nnoremap <F2> :vert diffsplit 
+
+" 设置当文件被改动时自动载入
+set autoread
+
+" quickfix模式
+autocmd FileType c,cpp map <buffer> <leader><space> :w<cr>:make<cr>
+" 代码补全 
+set completeopt=preview,menu 
+set ruler                   " 打开状态栏标尺
+set statusline=\ %<%F[%1*%M%*%n%R%H]%=\ %y\ %0(%{&fileformat}\ %{&encoding}\ %c:%l/%L%)\
+" 设置在状态行显示的信息
+set foldcolumn=0
+set foldmethod=indent 
+set foldlevel=10 
+set foldenable              " 开始折叠
+
+"允许backspace和光标键跨越行边界
+set whichwrap+=<,>,h,l
+
+"设置光标显示
+
+colorscheme darkblue
+"突出显示当前行
+set cursorline

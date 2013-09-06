@@ -10,7 +10,7 @@ step 4 git pull merge  push
 -v 当shell读入输入时显示出来
 -x 执行时把命令和参数都显示出来
 $? 上一条命令的返回值 0：成功 非零：失败
-sh 这则表达式匹配 if [[ "$i" =~ "^part.*1$" ]]
+sh 正则表达式匹配 if [[ "$i" =~ "^part.*1$" ]]
 screen 强制踢掉再连接 screen -D -r <session id>
 mail -s subject xxx@xx <file.txt 发送文件内容
 tar czf - /home/yfang/ | uuencode home.tgz |mail -s pictest yangfang@fudan.edu.cn 带附件的邮件
@@ -48,3 +48,13 @@ svn 语言英文设置 LANGUAGE=en_US.en
 
 union 变量共享内存 一个有值 会覆盖另一个
 vim map 映射失效一般是终端配置问题
+free以后的值不一定为空  手动赋值为空较好 
+
+linux 配置回收站  
+	1.在bashrc中声明rm‘alias rm='~/trash.sh'’ 
+	2.在trash.sh中定义rm命令'mv $@ yourtrashdir'
+
+vim 垂直比较diff
+垂直比较：vert diffsplit file
+打开quickfix  :cw
+
