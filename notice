@@ -57,4 +57,6 @@ linux 配置回收站
 vim 垂直比较diff
 垂直比较：vert diffsplit file
 打开quickfix  :cw
+grep -I "\<word\>" ./ -R  忽略二进制文件递归匹配查找
 
+python 捕获异常  try ... execpt...
