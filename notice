@@ -38,7 +38,7 @@ for(int i = 0; i < len_content; ++i)	{
 }
 
 case 2:
-String html = content,replace("\r", "");
+String html = content.replace("\r", "");
 	   html = content.replace("\n". "");	
 
 java坑 编码不一致时indexOf会出问题
@@ -60,3 +60,6 @@ vim 垂直比较diff
 grep -I "\<word\>" ./ -R  忽略二进制文件递归匹配查找
 
 python 捕获异常  try ... execpt...
+
+
+sed :  -n:打印匹配的行  =:打印行号  p:复制  /reg/str1/str2/g 替换  
