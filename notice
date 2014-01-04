@@ -62,7 +62,7 @@ free以后的值不一定为空  手动赋值为空较好
 
 
 
-/***************bash*******************/
+/***************shell*******************/
 linux 配置回收站  
 	1.在bashrc中声明rm‘alias rm='~/trash.sh'’ 
 scp localfile remotehost:floder
@@ -85,7 +85,7 @@ sort 命令不能直接用  对特殊字符排序不管用
 >out.txt 2 >&1 # 标准及错误输出到out.txt
 >&out.txt  #所有输出到out.txt
 
-/***************bash*******************/
+/***************shell*******************/
 
 
 
@@ -137,3 +137,18 @@ finish  借宿跟踪当前函数
 symbs-file:  指定符号文件
 
 /***************gdb********************/
+
+
+/***************内存********************/
+valgrind 
+perf 
+
+/***************内存********************/
+
+/***************hadoop********************/
+
+对key和value同时partion  textPair textDouble key.first & value.first
+outputvalueGrouping  key.first 
+
+/***************hadoop********************/
+
