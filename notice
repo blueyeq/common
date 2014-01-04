@@ -150,5 +150,10 @@ perf
 对key和value同时partion  textPair textDouble key.first & value.first
 outputvalueGrouping  key.first 
 
+partion 映射到同一个reducer (注意不是同义词reduce)
+valuegroup  构造value的迭代器  也就是key是复合值的时候按照 自己的定义构造value的迭代器
+key的比较调用compaerTo 本身就是二次排序了
+
+
 /***************hadoop********************/
 
