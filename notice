@@ -42,6 +42,8 @@ step 3 ssh-keygen
 step 4 git pull merge  push
 修改文件列表git log --oneline --stat
 git clone http://gitlab.mogujie.org/mogujie-search/msearch.git  solr-4.9.0-snapshot-0922
+git reset commit file
+git diff commit1 commit2 file
 
 /***************svn********************/
 
@@ -105,6 +107,7 @@ vim 垂直比较diff
 垂直比较：vert diffsplit file
 打开quickfix  :cw
 vim map 映射失效一般是终端配置问题
+eclipse ~/.vrapperrc
 /***************vim********************/
 
 
@@ -168,6 +171,8 @@ key的比较调用compaerTo 本身就是二次排序了
 硬盘测试 此命令为在当前目录下新建一个2G的文件
 time dd if=/dev/zero bs=1M count=2048 of=direct_2G
 cpu 测试 time echo "scale=5000; 4*a(1)" | bc -l -q
+节能模式 cpupower
+cat /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor
 /***************system*******************/
 
 
