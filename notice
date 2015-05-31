@@ -24,6 +24,13 @@ String html = content.replace("\r", "");
 	   html = content.replace("\n". "");	
 
 java坑 编码不一致时indexOf会出问题
+export JAVA_HOME="/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.51.x86_64/jre“
+export PATH=${JAVA_HOME}/bin:${PATH}
+内存分析 jhat oom.heap -port 7000
+内存分析 jmap -histo pid
+gc jstat -gcutil 1000 pid
+eclipse F4 继承关系
+log 中文出现？ JVM_OPT=-Dfile.encoding=UTF8
 /***************java*******************/
 
 
@@ -108,6 +115,7 @@ vim 垂直比较diff
 打开quickfix  :cw
 vim map 映射失效一般是终端配置问题
 eclipse ~/.vrapperrc
+sort: ':begin,end,sort[!:reverse] [n:num],[i:ignorcase]'
 /***************vim********************/
 
 
