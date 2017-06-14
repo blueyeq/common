@@ -5,6 +5,10 @@
 /***************point******************/
 
 
+/***************blade******************/
+静态库连接 1. lib/build{32,64}_{release,debug}/libfoo.a  lib/BUILD(prebuilt=True)
+           2. linkflags = ['-L /user/xxx/', '-lfoo']
+/***************blade******************/
 
 
 /***************java*******************/
@@ -26,11 +30,16 @@ String html = content.replace("\r", "");
 java坑 编码不一致时indexOf会出问题
 export JAVA_HOME="/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.51.x86_64/jre“
 export PATH=${JAVA_HOME}/bin:${PATH}
+pssh -Ph host.turn "java -version 2>&1"
 内存分析 jhat oom.heap -port 7000
 内存分析 jmap -histo pid
+内存dump jmap -F -dump:format=b,file=tomcat.bin 9142
+内存堆栈 jvisualvm
 gc jstat -gcutil 1000 pid
 eclipse F4 继承关系
 log 中文出现？ JVM_OPT=-Dfile.encoding=UTF8
+hi Pmenu guibg=#444444
+:h hl-pmenu
 /***************java*******************/
 
 
@@ -51,7 +60,12 @@ step 4 git pull merge  push
 git clone http://gitlab.mogujie.org/mogujie-search/msearch.git  solr-4.9.0-snapshot-0922
 git reset commit file
 git diff commit1 commit2 file
-
+https://oschina:123456@bitbucket.org/oschina/tool.git
+git co xxxx 历史版本
+git checkout -b name-of-new-branch 169d2dc
+git config --global credential.helper 'cache --timeout 3600'
+git reset src/searcher/searcher.cpp 撤销add
+git subtree pull --prefix=mogusearch http://gitlab.mogujie.org/mogujie-search/mogusearch.git develop
 /***************svn********************/
 
 
@@ -66,6 +80,8 @@ c++ private 可以通过指针强制类型转换访问
 c++不能在.h文件声明全局变量，要达到这个目的要在他对应的cpp文件中声明该全局的变量并且在.h文件中通过extern关键字声明该变量,那么在include了该文件的文件中可以不声明就用它,如果不在.h文件中通过extern声明那么他们就不能在其他c++文件中用它
 union 变量共享内存 一个有值 会覆盖另一个
 free以后的值不一定为空  手动赋值为空较好 
+strace 系统调用
+cpplint ./cpplint.py  --filter=+*,-whitespace,-legal ./*.cpp
 /***************C++********************/
 
 
@@ -91,6 +107,9 @@ sh 正则表达式匹配 if [[ "$i" =~ "^part.*1$" ]]
 screen 强制踢掉再连接 screen -D -r <session id>
 mail -s subject xxx@xx <file.txt 发送文件内容
 tar czf - /home/yfang/ | uuencode home.tgz |mail -s pictest xxx@xxx 带附件的邮件
+tar -zcvf - pma|openssl des3 -salt -k password | dd of=pma.des3
+dd if=pma.des3 |openssl des3 -d -k password|tar zxf -
+
 gsub(reg, str, $i)   将$i替换 
 sort 命令不能直接用  对特殊字符排序不管用
 >out.txt 2 >&1 # 标准及错误输出到out.txt
@@ -99,14 +118,36 @@ sort 命令不能直接用  对特殊字符排序不管用
 PS1='\n\e[1;37m[\e[m\e[1;32m\u\e[m\e[1;33m@\e[m\e[1;35m\h\e[m \e[4m`pwd`\e[m\e[1;37m]\e[m\e[1;36m\e[m \A\n$ '
 ls 颜色: ls --color=always
 $! 上一次进程的pid 通常用于记录后台服务pid
+egrep -ve "[0-9]{6}" --color q.hits0
+swap 进程 for i in `cd /proc;ls  |grep "^[0-9]"|awk ' $0 >100'` ;do awk '/Swap:/{a=a+$2}END{print '"$i"',a/1024"M"}' /proc/$i/smaps ;done  |sort -k2nr
+export LESSCHARSET=utf-8
+hexdump -C _8_Lucene50_0.pos
+nethogs 进程网络
+获取外部变量awk -F '=| ' '{if($(NF-9) > start && $(NF-9) < end ){ sum+=$(NF-1);num+=1}} END {print "hits:",start,"~",end, num,sum/num}' start="    $start", end="${end}"
+随机for ((i=0;i<100;i++)); do j=$[100 * $RANDOM / 32767]; sed -n "$j p" t.sh; done;
+awk -F '&' '{for(i=1;i<NF;++i) {if (match($i,'uq=') > 0) print $i} }
+awk -F '&' '{for(i=0;i<=NR;++i) if( $i ~ /^fq=\(stitle/) print $i}' query.xdao |head
+/etc/sysconfig/i18n  LC_CTYPE="en_US.UTF-8" 
+cat ./* | parallel --pipe  grep \'682 683\'
+parallel  -j 10 grep bb :::  .*/
+find . -type f -size +100000 | parallel rsync -e \'ssh -p 10022\'  {} 10.11.3.193:/home/linyu/data/index/{}
+core文件位置
+echo 'ulimit -S -c unlimited > /dev/null 2>&1' >>/etc/profile
+echo '/home/cores/core.%e.%p' > /proc/sys/kernel/core_pattern
+mkdir /home/cores
+echo '4194304' >/proc/sys/vm/min_free_kbytes
+echo 0 >/proc/sys/vm/zone_reclaim_mode
 
 /***************shell*******************/
 
 
 
 
+/***************protoc********************/
+protoc 
+/etc/ld.so.conf中加入/usr/local/lib  && /sbin/ldconfig -f /etc/ld.so.conf
 
-
+/***************protoc********************/
 
 
 /***************vim********************/
@@ -116,6 +157,10 @@ vim 垂直比较diff
 vim map 映射失效一般是终端配置问题
 eclipse ~/.vrapperrc
 sort: ':begin,end,sort[!:reverse] [n:num],[i:ignorcase]'
+ctags can't open tmp file export TMPDIR='~/tmp' ===>  TMPDIR=/home/xx/tmpdir
+colorscheme darkblue
+tabdo 对所有标签执行动作 tabdo e!
+bundle 自动装插件
 /***************vim********************/
 
 
@@ -138,6 +183,7 @@ python 捕获异常  try ... execpt...
 
 /***************sed********************/
 sed :  -n:打印匹配的行  =:打印行号  p:复制  /reg/str1/str2/g 替换  
+sed  's/.*uq=\(.*\)\&wq=.*/\1/'
 /***************sed********************/
 
 
@@ -159,6 +205,8 @@ symbs-file:  指定符号文件
 /***************内存********************/
 valgrind 
 perf 
+valgrind --tool=memcheck --leak-check=full ./a.out
+valgrind --tool=memcheck --leak-check=full --read-var-info=no --main-stacksize=45485760  --log-file=./valgrind.log  --error-limit=no ./bin/mgs_server -p10000
 
 /***************内存********************/
 
@@ -181,10 +229,56 @@ time dd if=/dev/zero bs=1M count=2048 of=direct_2G
 cpu 测试 time echo "scale=5000; 4*a(1)" | bc -l -q
 节能模式 cpupower
 cat /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor
+磁盘ssd cat /sys/block/sda/queue/rotational
+mkfs.ext4 /dev/sdb
+mkdir /ssd
+mount /dev/sdb /ssd
+mkdir /ssd/solr_instances
+ln -s /ssd/solr_instances /usr/local/
+fdisk -l
+echo 100 >/sys/module/ipmi_si/parameters/kipmid_max_busy_us
+kill -KILL 1
+kill -ABRT 1
+tinyproxy /opt/local/etc/tinyproxy.conf.default
 /***************system*******************/
 
 
+/***************tmux*******************/
+tmux attach -t session
+tmux new -n window -s session
+ctrl+space 切屏方式
+C-b & 清除当前窗口 以后不可用
+C-b d 暂时断开窗口
+C-b 方向键 切换窗口
+C-b { } 前置/后置窗口
+C-b x kill pan
+C-b $ 重命名 session
+#设置前缀为Ctrl + x
+set -g prefix C-x
+#解除Ctrl+b 与前缀的对应关系
+unbind C-b
+#up
+bind-key k select-pane -U
+#down
+bind-key j select-pane -D
+#left
+bind-key h select-pane -L
+#right
+bind-key l select-pane -R
+/***************tmux*******************/
 
 /***************solr*******************/
 solr 主从同步在solrconfig.xml 配置
+optional token query.default_operator or
 /***************solr*******************/
+
+
+/***************zlog*******************/
+zlog 自身错误信息
+export ZLOG_PROFILE_DEBUG=/home/linyu/tmp/zlog.debug.log
+/***************zlog*******************/
+
+/***************win*******************/
+安装系统
+移动硬盘主分区，活跃分区 mbr格式
+/***************win*******************/

@@ -42,11 +42,11 @@ struct httpRequest{
 	bool setServerAddr(const char *ip);
 	bool setServerPort(const char *port);
 	bool setFamily(int family);
+	bool getConnect();
 	int  makeRequest(char *send_str);
 	int  getSock();
-	bool getConnect();
 	int  sendMsg(char *msg);
-	int recvMsg();
+	int  recvMsg();
 
 		
 

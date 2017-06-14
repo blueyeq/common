@@ -17,6 +17,7 @@ set softtabstop=2
 set tabstop=2
 set sw=2
 set tabstop=2
+set expandtab
 set ignorecase
 set encoding=utf-8
 set fileencodings=ucs-bom,utf-8,euc-cn,cp936
@@ -164,3 +165,27 @@ set cursorline
 "iterm2
 let t_Co=256
 set hlsearch
+augroup filetype
+    autocmd! BufRead,BufNewFile BUILD set filetype=blade
+augroup end
+
+fun! VimInfo()
+  call setline(1,"\"lastline")
+endfun
+
+let vminfotag=1
+fun VimInfoTag(viminfo)
+  if g:vminfotag == 0
+    return
+  endif
+  let l=line("$")
+  let lastLine=getline(l)
+  if ( lastLine=~'^.*sw=.*$' ) == 0
+    call append(l,a:viminfo)
+  endif
+endfun
+
+let cviminfo="/\* sw=2;ts=2;sts=2;expandtab \*/"
+let scriptviminfo="# sw=2;ts=2;sts=2;expandtab"
+autocmd BufNewFile,FileWritePre,BufWritePre *.c,*.h,*.cpp,*.inl,*.hpp,*.cc ks|call VimInfoTag(cviminfo)|'s
+autocmd BufNewFile,FileWritePre,BufWritePre *.py,*.sh  ks|call VimInfoTag(scriptviminfo)|'s

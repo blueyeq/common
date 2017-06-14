@@ -53,28 +53,27 @@ int httpRequest::makeRequest(char *msg){
 	//char parameters[200] = "10.119.253.1:8360/msearch.htm?param=sep_fuzzy:1|sep_synm:1&count=10&code=1&kw=qihu&start=0";
 	phost = gethostbyname("www.baidu.com");
 	//printf("%s\n", inet_hostn(phost->h_addr));
-	char parameters[200] = " index.html ";
+//	char parameters[200] = "/solr/item/select?q=*%3A* ";
 	http_log("make msg");
-	strcat(send_buff, "  GET /");
-	strcat(send_buff, parameters);
-	strcat(send_buff, "HTTP/1.1\r\n");
-	strcat(send_buff, "Accept: image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/x-shockwave-flash\r\n");
+	strcat(send_buff, "GET ");
+	strcat(send_buff, msg);
+	strcat(send_buff, " HTTP/1.1\r\n");
+	strcat(send_buff, "Accept: */* \r\n");
 	strcat(send_buff, "Accept-Language: zh-cn\r\n");
 	strcat(send_buff, "User-Agent: Mozilla/4.0\r\n");
 	strcat(send_buff, "response-type: 1\r\n");
 	strcat(send_buff, "Content-Type: application/x-www-form-urlencoded\r\n");
-	strcat(send_buff, "host: 10.119.253.1\r\n");
+	strcat(send_buff, "host: 10.15.5.143\r\n");
 	strcat(send_buff, "Content-length: 0\r\n");
 	strcat(send_buff, "Connection: Keep-Alive\r\n");
 	strcat(send_buff, "\r\n\r\n");
-	
+
 	//内容信息
-	//strcat(send_buff, "10.119.253.1:9316/msearch.htm?param=sep_fuzzy:1|sep_synm:1&count=10&code=1&kw=qihu&start=0");
-	//http_log(send_buff);
 	printf("%s\n", send_buff);
 	return strlen(send_buff);
-	
+
 }
+
 int  httpRequest::getSock(){
 	sock_fd = socket(AF_INET, SOCK_STREAM, 0);
 	if(sock_fd < 0) http_log("get socket fail");
@@ -114,3 +113,4 @@ bool httpRequest::init(const char *ip, const char *port){
 }
 
 
+/* sw=2;ts=2;sts=2;expandtab */

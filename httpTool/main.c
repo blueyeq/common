@@ -5,9 +5,11 @@ int main(){
 
 	struct httpRequest http_hander;
 	puts("main");
-	if(http_hander.init("10.119.110.21", "8080")){
+	if(http_hander.init("15.15.5.143", "8080")){
 		puts("init");
-		if(http_hander.sendMsg("msearch.htm?param=sep_fuzzy:1|sep_synm:1&count=10&code=1&kw=qihu&start=0") > 0){
+    char req_str[] = "/solr/item/select?q=*%3A*&wt=json&indent=true";
+    //char req_str[] = "/search.php?q=content:abc";
+		if(http_hander.sendMsg(req_str) > 0){
 			puts("wait msg");
 			http_hander.recvMsg();
 			puts("recv msg");
@@ -20,3 +22,4 @@ int main(){
 
 	return 0;
 }
+/* sw=2;ts=2;sts=2;expandtab */
