@@ -57,7 +57,7 @@ step 2 git add remote origin gits://github.com/blueyeq/common.git
 step 3 ssh-keygen
 step 4 git pull merge  push
 修改文件列表git log --oneline --stat
-git clone http://gitlab.mogujie.org/mogujie-search/msearch.git  solr-4.9.0-snapshot-0922
+git clone http://gitlab.xx.org/search/.git  
 git reset commit file
 git diff commit1 commit2 file
 https://oschina:123456@bitbucket.org/oschina/tool.git
@@ -65,7 +65,7 @@ git co xxxx 历史版本
 git checkout -b name-of-new-branch 169d2dc
 git config --global credential.helper 'cache --timeout 3600'
 git reset src/searcher/searcher.cpp 撤销add
-git subtree pull --prefix=mogusearch http://gitlab.mogujie.org/mogujie-search/mogusearch.git develop
+git subtree pull --prefix=mogusearch http://gitlab.xxx.org/xx/xx.git develop
 /***************svn********************/
 
 
