@@ -12,7 +12,7 @@ echo 'thread:' ${thread}
 
 echo ${per_thread}
 
-for((i=0;i<${thread}; ++i))
+for ((i=0;i<${thread}; ++i))
 do
 {
   for((j=0;j<${per_thread};++j))

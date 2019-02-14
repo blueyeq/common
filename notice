@@ -56,6 +56,7 @@ step 1 git init
 step 2 git add remote origin gits://github.com/blueyeq/common.git
 step 3 ssh-keygen
 step 4 git pull merge  push
+chmod 700 -R ~/.ssh
 修改文件列表git log --oneline --stat
 git clone http://gitlab.xx.org/search/.git  
 git reset commit file
@@ -111,7 +112,7 @@ tar -zcvf - pma|openssl des3 -salt -k password | dd of=pma.des3
 dd if=pma.des3 |openssl des3 -d -k password|tar zxf -
 
 gsub(reg, str, $i)   将$i替换 
-sort 命令不能直接用  对特殊字符排序不管用
+LC_ALL=c  sort 命令不能直接用  对特殊字符排序不管用
 >out.txt 2 >&1 # 标准及错误输出到out.txt
 >&out.txt  #所有输出到out.txt
 终端显示
@@ -127,6 +128,7 @@ nethogs 进程网络
 随机for ((i=0;i<100;i++)); do j=$[100 * $RANDOM / 32767]; sed -n "$j p" t.sh; done;
 awk -F '&' '{for(i=1;i<NF;++i) {if (match($i,'uq=') > 0) print $i} }
 awk -F '&' '{for(i=0;i<=NR;++i) if( $i ~ /^fq=\(stitle/) print $i}' query.xdao |head
+按第一列去重awk '{if(!a[$1])c[++t]=$1;a[$1]=$0}END{for(n=1;n<=t;n++)print a[c[n]]}'
 /etc/sysconfig/i18n  LC_CTYPE="en_US.UTF-8" 
 cat ./* | parallel --pipe  grep \'682 683\'
 parallel  -j 10 grep bb :::  .*/
